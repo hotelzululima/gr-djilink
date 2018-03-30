@@ -1,0 +1,11 @@
+<block>
+  <name>Scenario</name>
+  <key>djilink_scenario</key>
+  <category>[DJILINK]</category>
+  <import>import djilink</import>
+  <make>djilink.scenario()</make>
+  <sink>
+    <name>in</name>
+    <type>short</type>
+  </sink>
+</block>
