@@ -42,7 +42,7 @@ if(NOT djilink_sources)
 endif(NOT djilink_sources)
 
 add_library(gnuradio-djilink SHARED ${djilink_sources})
-target_link_libraries(gnuradio-djilink ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES})
+target_link_libraries(gnuradio-djilink ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES} djiTools)
 set_target_properties(gnuradio-djilink PROPERTIES DEFINE_SYMBOL "gnuradio_djilink_EXPORTS")
 
 if(APPLE)
@@ -77,6 +77,7 @@ target_link_libraries(
   ${Boost_LIBRARIES}
   ${CPPUNIT_LIBRARIES}
   gnuradio-djilink
+  djiTools
 )
 
 GR_ADD_TEST(test_djilink test-djilink)
