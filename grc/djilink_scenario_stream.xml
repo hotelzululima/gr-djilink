@@ -1,0 +1,11 @@
+<block>
+  <name>Scenario stream</name>
+  <key>djilink_scenario_stream</key>
+  <category>[DJILINK]</category>
+  <import>import djilink</import>
+  <make>djilink.scenario_stream()</make>
+  <sink>
+    <name>in</name>
+    <type>int</type>
+  </sink>
+</block>

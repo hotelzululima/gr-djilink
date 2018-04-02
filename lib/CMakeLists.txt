@@ -21,7 +21,7 @@
 ########################################################################
 # Setup DJI SDK
 ########################################################################
-INCLUDE(djiTools/CMakeLists.txt)
+#INCLUDE(djiTools/CMakeLists.txt)
 
 ########################################################################
 # Setup library
@@ -31,8 +31,47 @@ include(GrPlatform) #define LIB_SUFFIX
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread -g -O0")
+
 list(APPEND djilink_sources
+    	scenario_stream_impl.cc
+    	djiTools/dji_ack.cpp
+    	djiTools/dji_aes.cpp
+   	djiTools/dji_broadcast.cpp
+	djiTools/dji_camera.cpp
+	djiTools/dji_circular_buffer.cpp
+	djiTools/dji_command.cpp
+	djiTools/dji_control.cpp
+	djiTools/dji_error.cpp
+	djiTools/dji_gimbal.cpp
+	djiTools/dji_hard_driver.cpp
+	djiTools/dji_hardware_sync.cpp
+	djiTools/dji_hotpoint.cpp
+	djiTools/dji_linux_environment.cpp
+	djiTools/dji_linux_helpers.cpp
+	djiTools/dji_log.cpp
+	djiTools/dji_memory.cpp
+	djiTools/dji_memory_default.cpp
+	djiTools/dji_mfio.cpp
+	djiTools/dji_mission_manager.cpp
+	djiTools/dji_mobile_communication.cpp
+	djiTools/dji_open_protocol.cpp
+	djiTools/dji_platform_manager.cpp
+	djiTools/dji_protocol_base.cpp
+	djiTools/dji_singleton.cpp
+	djiTools/dji_subscription.cpp
+	djiTools/dji_thread_manager.cpp
+	djiTools/dji_vehicle.cpp
+	djiTools/dji_version.cpp
+	djiTools/dji_virtual_rc.cpp
+	djiTools/dji_waypoint.cpp
+	djiTools/flight_control_sample.cpp
+	djiTools/linux_serial_device.cpp
+	djiTools/posix_thread.cpp
+	djiTools/posix_thread_manager.cpp
+	djiTools/telemetry_sample.cpp
     scenario_impl.cc
+    scenario_sender_impl.cc
 )
 
 set(djilink_sources "${djilink_sources}" PARENT_SCOPE)
@@ -42,7 +81,7 @@ if(NOT djilink_sources)
 endif(NOT djilink_sources)
 
 add_library(gnuradio-djilink SHARED ${djilink_sources})
-target_link_libraries(gnuradio-djilink ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES} djiTools)
+target_link_libraries(gnuradio-djilink ${Boost_LIBRARIES} ${GNURADIO_ALL_LIBRARIES})
 set_target_properties(gnuradio-djilink PROPERTIES DEFINE_SYMBOL "gnuradio_djilink_EXPORTS")
 
 if(APPLE)
@@ -77,7 +116,6 @@ target_link_libraries(
   ${Boost_LIBRARIES}
   ${CPPUNIT_LIBRARIES}
   gnuradio-djilink
-  djiTools
 )
 
 GR_ADD_TEST(test_djilink test-djilink)

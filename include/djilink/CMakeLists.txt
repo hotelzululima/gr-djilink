@@ -23,5 +23,7 @@
 ########################################################################
 install(FILES
     api.h
-    scenario.h DESTINATION include/djilink
+    scenario_stream.h
+    scenario.h
+    scenario_sender.h DESTINATION include/djilink
 )

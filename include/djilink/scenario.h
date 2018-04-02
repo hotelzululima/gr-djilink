@@ -23,7 +23,7 @@
 #define INCLUDED_DJILINK_SCENARIO_H
 
 #include <djilink/api.h>
-#include <gnuradio/sync_block.h>
+#include <gnuradio/block.h>
 
 namespace gr {
   namespace djilink {
@@ -33,7 +33,7 @@ namespace gr {
      * \ingroup djilink
      *
      */
-    class DJILINK_API scenario : virtual public gr::sync_block
+    class DJILINK_API scenario : virtual public gr::block
     {
      public:
       typedef boost::shared_ptr<scenario> sptr;

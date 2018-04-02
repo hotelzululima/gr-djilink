@@ -5,7 +5,8 @@
   <import>import djilink</import>
   <make>djilink.scenario()</make>
   <sink>
-    <name>in</name>
-    <type>short</type>
+    <name>scenario_msg</name>
+    <type>message</type>
+    <optional>1</optional>
   </sink>
 </block>

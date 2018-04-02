@@ -25,10 +25,7 @@
 #include <gnuradio/io_signature.h>
 #include "scenario_impl.h"
 
-
-#include <iostream>
-#include <dji_vehicle.hpp> // TODO remove or adapt
-#include "djiTools/flight_control_sample.hpp"
+using namespace DJI::OSDK; 
 
 namespace gr {
   namespace djilink {
@@ -44,11 +41,20 @@ namespace gr {
      * The private constructor
      */
     scenario_impl::scenario_impl()
-      : gr::sync_block("scenario",
-              gr::io_signature::make(1, 1, sizeof(short)),
+      : gr::block("scenario",
+              gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0))
     {
-      std::cout << "Hello from scenario_impl" << std::endl;
+      message_port_register_in(pmt::mp("scenario_msg"));
+      set_msg_handler(pmt::mp("scenario_msg"), boost::bind( &scenario_impl::handle_pdu, this, _1) );
+
+      char timeoutString[] = "/home/sami/down/gr-djilink/lib/UserConfig.txt";
+      char *argv[] = { timeoutString, timeoutString, timeoutString}; // WTF?
+
+      LinuxSetup linuxEnvironment(2, argv); 
+      vehicle = linuxEnvironment.getVehicle();
+
+      std::cout << vehicle << std::endl;
     }
 
     /*
@@ -58,17 +64,52 @@ namespace gr {
     {
     }
 
-    int
-    scenario_impl::work(int noutput_items,
-        gr_vector_const_void_star &input_items,
-        gr_vector_void_star &output_items)
+    void
+    scenario_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
-      const short *in = (const short *) input_items[0];
+      /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
+    }
+
+    int
+    scenario_impl::general_work (int noutput_items,
+                       gr_vector_int &ninput_items,
+                       gr_vector_const_void_star &input_items,
+                       gr_vector_void_star &output_items)
+    {
+      // const <+ITYPE+> *in = (const <+ITYPE+> *) input_items[0];
+      // <+OTYPE+> *out = (<+OTYPE+> *) output_items[0];
 
       // Do <+signal processing+>
+      // Tell runtime system how many input items we consumed on
+      // each input stream.
+      consume_each (noutput_items);
 
       // Tell runtime system how many output items we produced.
       return noutput_items;
+    }
+
+   void 
+   scenario_impl::handle_pdu(pmt::pmt_t pdu)
+   {
+        pmt::pmt_t key = pmt::car(pdu);
+        pmt::pmt_t scenarioId = pmt::cdr(pdu);
+      
+
+        std::cout << "Received message:\n\t- key: " << key << "\n\t- msg: " << scenarioId << std::endl;
+        
+        std::cout << vehicle << std::endl;
+
+        getBroadcastData(vehicle, 100);
+        
+
+
+        if (scenarioId == pmt::mp("TAKE_OFF")){
+          /* code */
+        }else if(scenarioId == pmt::mp("BROADCAST")){
+          // getBroadcastData(vehicle, 1);
+        }else{
+          std::cout<< "Error: unknown command" << std::endl;
+        }
     }
 
   } /* namespace djilink */

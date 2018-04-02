@@ -19,5 +19,7 @@
 # Boston, MA 02110-1301, USA.
 
 install(FILES
-    djilink_scenario.xml DESTINATION share/gnuradio/grc/blocks
+    djilink_scenario_stream.xml
+    djilink_scenario.xml
+    djilink_scenario_sender.xml DESTINATION share/gnuradio/grc/blocks
 )

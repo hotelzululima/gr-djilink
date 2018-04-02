@@ -38,10 +38,10 @@
 
 // DJI OSDK includes
 #include "dji_status.hpp"
-#include <dji_vehicle.hpp>
+#include "dji_vehicle.hpp"
 
 // Helpers
-#include <dji_linux_helpers.hpp>
+#include "dji_linux_helpers.hpp"
 
 #define C_EARTH (double)6378137.0
 #define DEG2RAD 0.01745329252

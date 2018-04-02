@@ -35,10 +35,10 @@
 #include <iostream>
 
 // DJI OSDK includes
-#include <dji_vehicle.hpp>
+#include "dji_vehicle.hpp"
 
 // Helpers
-#include <dji_linux_helpers.hpp>
+#include "dji_linux_helpers.hpp"
 
 bool subscribeToData(DJI::OSDK::Vehicle* vehiclePtr, int responseTimeout = 1);
 

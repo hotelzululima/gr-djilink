@@ -23,10 +23,12 @@
 
 #include <djilink/scenario.h>
 
-
 #include <iostream>
-#include <dji_vehicle.hpp> // TODO remove or adapt
+#include "djiTools/dji_vehicle.hpp" // TODO remove or adapt
 #include "djiTools/flight_control_sample.hpp"
+#include "djiTools/telemetry_sample.hpp"
+
+using namespace DJI::OSDK; 
 
 namespace gr {
   namespace djilink {
@@ -34,16 +36,20 @@ namespace gr {
     class scenario_impl : public scenario
     {
      private:
-      // Nothing to declare in this block.
+      void handle_pdu(pmt::pmt_t pdu);
 
      public:
+      Vehicle *vehicle;
       scenario_impl();
       ~scenario_impl();
 
       // Where all the action really happens
-      int work(int noutput_items,
-         gr_vector_const_void_star &input_items,
-         gr_vector_void_star &output_items);
+      void forecast (int noutput_items, gr_vector_int &ninput_items_required);
+
+      int general_work(int noutput_items,
+           gr_vector_int &ninput_items,
+           gr_vector_const_void_star &input_items,
+           gr_vector_void_star &output_items);
     };
 
   } // namespace djilink

@@ -36,6 +36,7 @@ using namespace DJI::OSDK::Telemetry;
 bool
 getBroadcastData(DJI::OSDK::Vehicle* vehicle, int responseTimeout)
 {
+  std::cout << "DEBUG 1" << std::endl;
   // Counters
   int elapsedTimeInMs = 0;
   int timeToPrintInMs = 2000;
@@ -61,16 +62,21 @@ getBroadcastData(DJI::OSDK::Vehicle* vehicle, int responseTimeout)
   // Re-set Broadcast frequencies to their default values
   ACK::ErrorCode ack = vehicle->broadcast->setBroadcastFreqDefaults(TIMEOUT);
 
+  std::cout << "DEBUG 2" << std::endl;
+
   // Print in a loop for 2 seconds
   while (elapsedTimeInMs < timeToPrintInMs)
   {
+    std::cout << "DEBUG 3" << std::endl;
     // Matrice 100 broadcasts only flight status
     status         = vehicle->broadcast->getStatus();
     globalPosition = vehicle->broadcast->getGlobalPosition();
     rc             = vehicle->broadcast->getRC();
     velocity       = vehicle->broadcast->getVelocity();
     quaternion     = vehicle->broadcast->getQuaternion();
-
+    
+    std::cout << "DEBUG 4" << std::endl;
+    
     std::cout << "Counter = " << elapsedTimeInMs << ":\n";
     std::cout << "-------\n";
     std::cout << "Flight Status                         = "
